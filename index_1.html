@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>喜餅領取名單（手機版）</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 16px;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+        h2 {
+            font-size: 1.4em;
+            margin-bottom: 12px;
+        }
+        label, select {
+            font-size: 1em;
+            margin-right: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            background-color: white;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-size: 1em;
+        }
+        input[type="checkbox"] {
+            transform: scale(1.5);
+        }
+        @media (max-width: 600px) {
+            th, td {
+                padding: 8px;
+                font-size: 0.95em;
+            }
+            h2 {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>喜餅領取登記表（手機版）</h2>
+    <label for="surname-select">選擇姓氏：</label>
+    <select id="surname-select" onchange="renderTable()">
+        <option value="">-- 請選擇姓氏 --</option>
+        <option value="余">余</option>
+<option value="劉">劉</option>
+<option value="吳">吳</option>
+<option value="廖">廖</option>
+<option value="張">張</option>
+<option value="曾">曾</option>
+<option value="李">李</option>
+<option value="林">林</option>
+<option value="楊">楊</option>
+<option value="洪">洪</option>
+<option value="游">游</option>
+<option value="潘">潘</option>
+<option value="蔡">蔡</option>
+<option value="邱">邱</option>
+<option value="鄧">鄧</option>
+<option value="鄭">鄭</option>
+<option value="陳">陳</option>
+<option value="黃">黃</option>
+    </select>
+
+    <label for="filter">　篩選：</label>
+    <select id="filter" onchange="renderTable()">
+        <option value="all">全部</option>
+        <option value="received">已領</option>
+        <option value="not_received">未領</option>
+    </select>
+
+    <table>
+        <thead>
+            <tr>
+                <th>姓名</th>
+                <th>已領喜餅</th>
+            </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+    </table>
+
+    <script>
+        const data = [{"姓名": "余文淵", "已領喜餅": ""}, {"姓名": "吳記", "已領喜餅": ""}, {"姓名": "吳東森", "已領喜餅": ""}, {"姓名": "吳潘玉梅", "已領喜餅": ""}, {"姓名": "李協雲", "已領喜餅": ""}, {"姓名": "李春風", "已領喜餅": ""}, {"姓名": "李讚清", "已領喜餅": ""}, {"姓名": "林素英", "已領喜餅": ""}, {"姓名": "林連順", "已領喜餅": ""}, {"姓名": "邱永錦", "已領喜餅": ""}, {"姓名": "洪東岳", "已領喜餅": ""}, {"姓名": "張美月", "已領喜餅": ""}, {"姓名": "廖信儀", "已領喜餅": ""}, {"姓名": "陳竹籃", "已領喜餅": ""}, {"姓名": "陳宏正", "已領喜餅": ""}, {"姓名": "陳景彬", "已領喜餅": ""}, {"姓名": "陳福源", "已領喜餅": ""}, {"姓名": "曾俊斐", "已領喜餅": ""}, {"姓名": "游明耀", "已領喜餅": ""}, {"姓名": "黃勝景", "已領喜餅": ""}, {"姓名": "黃雅怡", "已領喜餅": ""}, {"姓名": "黃碧瑤", "已領喜餅": ""}, {"姓名": "黃欗", "已領喜餅": ""}, {"姓名": "蔡木炎", "已領喜餅": ""}, {"姓名": "鄧錦松", "已領喜餅": ""}, {"姓名": "鄭淑貴", "已領喜餅": ""}, {"姓名": "楊士平", "已領喜餅": ""}, {"姓名": "楊志成", "已領喜餅": ""}, {"姓名": "楊志中", "已領喜餅": ""}, {"姓名": "楊志輝", "已領喜餅": ""}, {"姓名": "楊育昇", "已領喜餅": ""}, {"姓名": "楊定家", "已領喜餅": ""}, {"姓名": "楊彩梅", "已領喜餅": ""}, {"姓名": "楊淑美", "已領喜餅": ""}, {"姓名": "楊琮仁", "已領喜餅": ""}, {"姓名": "楊琮智", "已領喜餅": ""}, {"姓名": "楊福財", "已領喜餅": ""}, {"姓名": "楊維修", "已領喜餅": ""}, {"姓名": "劉俊育", "已領喜餅": ""}, {"姓名": "劉炳森", "已領喜餅": ""}, {"姓名": "潘子琪", "已領喜餅": ""}, {"姓名": "潘正敏", "已領喜餅": ""}, {"姓名": "潘吉成", "已領喜餅": ""}, {"姓名": "潘綉絨", "已領喜餅": ""}, {"姓名": "潘明貴", "已領喜餅": ""}, {"姓名": "潘俊利", "已領喜餅": ""}, {"姓名": "潘英輝", "已領喜餅": ""}, {"姓名": "潘貞慧", "已領喜餅": ""}, {"姓名": "潘重榮", "已領喜餅": ""}, {"姓名": "潘桂花", "已領喜餅": ""}, {"姓名": "潘勝章", "已領喜餅": ""}, {"姓名": "潘進旺", "已領喜餅": ""}, {"姓名": "潘萬龍", "已領喜餅": ""}, {"姓名": "潘慶章", "已領喜餅": ""}, {"姓名": "潘濟民", "已領喜餅": ""}];
+        const storageKey = 'xibing-status';
+        let status = JSON.parse(localStorage.getItem(storageKey) || '{}');
+
+        function renderTable() {
+            const selectedSurname = document.getElementById('surname-select').value;
+            const filter = document.getElementById('filter').value;
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+
+            data.forEach((person) => {
+                const name = person["姓名"];
+                const surname = name[0];
+                const checked = status[name] === true;
+
+                if (selectedSurname && surname !== selectedSurname) return;
+                if (filter === "received" && !checked) return;
+                if (filter === "not_received" && checked) return;
+
+                const row = document.createElement('tr');
+                const nameCell = document.createElement('td');
+                nameCell.textContent = name;
+
+                const checkCell = document.createElement('td');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = checked;
+
+                checkbox.addEventListener('click', function(e) {
+                    const confirmMsg = "確定要變更「" + name + "」的領取狀態嗎？";
+                    if (!confirm(confirmMsg)) {
+                        e.preventDefault();
+                    }
+                });
+
+                checkbox.addEventListener('change', () => {
+                    status[name] = checkbox.checked;
+                    localStorage.setItem(storageKey, JSON.stringify(status));
+                });
+
+                checkCell.appendChild(checkbox);
+                row.appendChild(nameCell);
+                row.appendChild(checkCell);
+                tbody.appendChild(row);
+            });
+        }
+
+        renderTable();
+    </script>
+</body>
+</html>
